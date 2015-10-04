@@ -22,7 +22,7 @@ sim<-matrix(rexp(nosim*n,lambda),nosim)
 
 ##Sample Mean versus Theoretical Mean
 ```{R Show the sample mean }
-means<-apply(sim,1,mean) #estimate means
+means<-apply(sim,1,mean) #estimate n means
 mean_theory<-1/lambda #theoretical mean 
 mean_sample<-mean(means) #sample mean 
 
@@ -36,15 +36,27 @@ ggplot()+aes(means)+
   scale_colour_manual(name="Mean", values=c(Theoretical="red",Sample="blue"))+
   labs(title="Histogram of averages of 40 exponentials",x="Mean",y="Frequency")+
   annotate("text",label=paste("Theoretical mean:",as.character(mean_theory)),
-           x=mean_theory+1.6,y=120,colour="red")+
+           x=mean_theory+1.7,y=120,colour="red")+
   annotate("text",label=paste("Sample mean:",format(mean_sample,digits=4)),
-           x=mean_theory+1.65,y=113,colour="blue")
+           x=mean_theory+1.75,y=113,colour="blue")
 ```
 
 ##Sample Variance versus Theoretical Variance
 ```{R Show the sample variance }
 sd_sample<-sd(means)
 sd_theory<-1/lambda/sqrt(n)
+
+#draw histogram
+ggplot()+aes(means)+
+  geom_histogram(binwidth=0.25, colour="black", fill="blue",alpha=0.2,aes(y=..density..))+
+  stat_function(fun=dnorm, args=list(mean=mean_theory, sd=sd_theory),color="red",size=1.5)+
+  labs(title="Distribution of means of 40 exponentials",x="Mean",y="Density")+
+  annotate("text",label=paste("Theoretical std:",format(sd_theory,digits=4)),
+           x=6.7,y=0.5,colour="red")+
+  annotate("text",label=paste("Sample std:",format(sd_sample,digits=4)),
+           x=6.55,y=0.46,colour="blue")
+  
+
 ```
 
 ##Distribution:
@@ -52,4 +64,14 @@ sd_theory<-1/lambda/sqrt(n)
 ggplot()+aes(as.vector(sim))+
   geom_histogram(binwidth=2.5, colour="black", fill="white")+
   labs(title="Distribution of exponentials",x="Value",y="Frequency")
+```
+
+#Part 2
+* Load the ToothGrowth data and perform some basic exploratory data analyses 
+* Provide a basic summary of the data.
+* Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose. (Only use the techniques from class, even if there's other approaches worth considering)
+* State your conclusions and the assumptions needed for your conclusions
+
+```{R load data}
+
 ```
