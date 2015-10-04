@@ -7,7 +7,9 @@ output: html_document
 ```{R Loading libraries }
 library(ggplot2)
 ```
-
+#Part 1
+##Overview
+##Simulations
 ```{R Simulate 40 exponetials}
 set.seed(1234)
 nosim<-1000 # number of simulations
@@ -16,11 +18,9 @@ lambda<-.2 #set lambda
 
 #simulate 1000 means of 40 exponentials
 sim<-matrix(rexp(nosim*n,lambda),nosim)
-ggplot()+aes(as.vector(sim))+
-  geom_histogram(binwidth=2.5, colour="black", fill="white")+
-  labs(title="Distribution of exponentials",x="Value",y="Frequency")
 ```
 
+##Sample Mean versus Theoretical Mean
 ```{R Show the sample mean }
 means<-apply(sim,1,mean) #estimate means
 mean_theory<-1/lambda #theoretical mean 
@@ -41,9 +41,15 @@ ggplot()+aes(means)+
            x=mean_theory+1.65,y=113,colour="blue")
 ```
 
+##Sample Variance versus Theoretical Variance
 ```{R Show the sample variance }
 sd_sample<-sd(means)
 sd_theory<-1/lambda/sqrt(n)
 ```
 
-dffg
+##Distribution:
+```{R Show distributions }
+ggplot()+aes(as.vector(sim))+
+  geom_histogram(binwidth=2.5, colour="black", fill="white")+
+  labs(title="Distribution of exponentials",x="Value",y="Frequency")
+```
