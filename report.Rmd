@@ -4,11 +4,10 @@ author: "Victor Bucha"
 date: "4 October 2015"
 output: html_document
 ---
-```{R Loading libraries }
-library(ggplot2)
-```
 #Part 1
 ##Overview
+We simulated 1000 means of 40 exponentials. Sample mean and standard deviation agree with the theory and close to both theoretical mean and standard deviation. It is shown the distribution of the mean of 40 exponentials is approximatly normal with mean=4.974 and sd=0.7713.
+
 ##Simulations
 ```{R Simulate 40 exponetials}
 set.seed(1234)
@@ -27,6 +26,7 @@ mean_theory<-1/lambda #theoretical mean
 mean_sample<-mean(means) #sample mean 
 
 #draw histogram of means
+library(ggplot2)
 ggplot()+aes(means)+
   geom_histogram(binwidth=0.25, colour="black", fill="white")+
   geom_vline(aes(xintercept = mean_theory,colour="Theoretical"),
