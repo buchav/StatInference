@@ -1,0 +1,49 @@
+---
+title: "Statistical Inference Course Project"
+author: "Victor Bucha"
+date: "4 October 2015"
+output: html_document
+---
+```{R Loading libraries }
+library(ggplot2)
+```
+
+```{R Simulate 40 exponetials}
+set.seed(1234)
+nosim<-1000 # number of simulations
+n<-40 # number of exponentials
+lambda<-.2 #set lambda
+
+#simulate 1000 means of 40 exponentials
+sim<-matrix(rexp(nosim*n,lambda),nosim)
+ggplot()+aes(as.vector(sim))+
+  geom_histogram(binwidth=2.5, colour="black", fill="white")+
+  labs(title="Distribution of exponentials",x="Value",y="Frequency")
+```
+
+```{R Show the sample mean }
+means<-apply(sim,1,mean) #estimate means
+mean_theory<-1/lambda #theoretical mean 
+mean_sample<-mean(means) #sample mean 
+
+#draw histogram of means
+ggplot()+aes(means)+
+  geom_histogram(binwidth=0.25, colour="black", fill="white")+
+  geom_vline(aes(xintercept = mean_theory,colour="Theoretical"),
+             size=2.5,linetype=2,show_guide = TRUE)+
+  geom_vline(aes(xintercept = mean_sample,colour="Sample"),
+             size=1.2,linetype=2,show_guide = TRUE)+
+  scale_colour_manual(name="Mean", values=c(Theoretical="red",Sample="blue"))+
+  labs(title="Histogram of averages of 40 exponentials",x="Mean",y="Frequency")+
+  annotate("text",label=paste("Theoretical mean:",as.character(mean_theory)),
+           x=mean_theory+1.6,y=120,colour="red")+
+  annotate("text",label=paste("Sample mean:",format(mean_sample,digits=4)),
+           x=mean_theory+1.65,y=113,colour="blue")
+```
+
+```{R Show the sample variance }
+sd_sample<-sd(means)
+sd_theory<-1/lambda/sqrt(n)
+```
+
+dffg
