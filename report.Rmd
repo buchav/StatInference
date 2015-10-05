@@ -120,7 +120,7 @@ t.test(VC10,OJ10,alternative="less")
 #### Conclusion:
 The same result as for 0.5 dose. We reject Null hypothesis and accept alternative. It means **ascorbic acid provides less tooth growth for  1.0 dose level with 95% confidence.**
 
-## Orange Juice vs Ascorbic Acid at 1.0 dose level
+## Orange Juice vs Ascorbic Acid at 2.0 dose level
 Let us check 2.0 dose. H0: mu=0, H1: mu!=0
 
 ```{R Test hypothesis for dose level 2.0}
