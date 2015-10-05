@@ -9,6 +9,7 @@ output: html_document
 We simulated 1000 means of 40 exponentials. Sample mean and standard deviation agree with the theory and close to both theoretical mean and standard deviation. It is shown the distribution of the mean of 40 exponentials is approximatly normal with mean=4.974 and sd=0.7713.
 
 ##Simulations
+In this simulation, we simulated 1000 means of 40 exponetials. Lambda was set to 0.2. As a result we get matrix sim with 1000 rows and 40 columns.
 ```{R Simulate 40 exponetials}
 set.seed(1234)
 nosim<-1000 # number of simulations
@@ -20,6 +21,7 @@ sim<-matrix(rexp(nosim*n,lambda),nosim)
 ```
 
 ##Sample Mean versus Theoretical Mean
+Theoretical mean of exponetial distribution is equal to 1/lambda=0.5. Then we investigated distribution of averages of 40 exponentials. Its sample mean should be centered at what distribution estimating. We got sample mean close to theoretical mean as it's shown at figure bellow.
 ```{R Show the sample mean }
 means<-apply(sim,1,mean) #estimate n means
 mean_theory<-1/lambda #theoretical mean 
@@ -34,7 +36,7 @@ ggplot()+aes(means)+
   geom_vline(aes(xintercept = mean_sample,colour="Sample"),
              size=1.2,linetype=2,show_guide = TRUE)+
   scale_colour_manual(name="Mean", values=c(Theoretical="red",Sample="blue"))+
-  labs(title="Histogram of averages of 40 exponentials",x="Mean",y="Frequency")+
+  labs(title="Histogram of averages of 40 exponentials",x="Value",y="Frequency")+
   annotate("text",label=paste("Theoretical mean:",as.character(mean_theory)),
            x=mean_theory+1.7,y=120,colour="red")+
   annotate("text",label=paste("Sample mean:",format(mean_sample,digits=4)),
@@ -42,6 +44,8 @@ ggplot()+aes(means)+
 ```
 
 ##Sample Variance versus Theoretical Variance
+Theoretical variance of the sample mean is the population variance divided by n. We estimated standart error by dividing  theoretical standard deviaition equal to 1/lambda by square root of n equal to 40. Obtained theoretical standart deviation was compared with sample standard deviation. They were close as theory predicted.
+
 ```{R Show the sample variance }
 sd_sample<-sd(means)
 sd_theory<-1/lambda/sqrt(n)
@@ -50,20 +54,29 @@ sd_theory<-1/lambda/sqrt(n)
 ggplot()+aes(means)+
   geom_histogram(binwidth=0.25, colour="black", fill="blue",alpha=0.2,aes(y=..density..))+
   stat_function(fun=dnorm, args=list(mean=mean_theory, sd=sd_theory),color="red",size=1.5)+
-  labs(title="Distribution of means of 40 exponentials",x="Mean",y="Density")+
+  labs(title="Distribution of means of 40 exponentials",x="Value",y="Density")+
   annotate("text",label=paste("Theoretical std:",format(sd_theory,digits=4)),
            x=6.7,y=0.5,colour="red")+
   annotate("text",label=paste("Sample std:",format(sd_sample,digits=4)),
            x=6.55,y=0.46,colour="blue")
-  
-
 ```
 
-##Distribution:
+##Distribution
+At first let us plot distribution of exponentials obtained on the first simulation step of assignment. It follows exponetial law as we can see from figure bellow.
+
 ```{R Show distributions }
 ggplot()+aes(as.vector(sim))+
-  geom_histogram(binwidth=2.5, colour="black", fill="white")+
-  labs(title="Distribution of exponentials",x="Value",y="Frequency")
+  geom_histogram(binwidth=2.5, colour="black", fill="white",aes(y=..density..))+
+  labs(title="Distribution of exponentials",x="Value",y="Density")
+```
+
+Central Limit Theorem states that the distribution of averages of iid variables become that of a standard normal. Bellow figure shows the distribution of means of 40 exponentials. The shape of distribution is very close to normal. So we obtained result that agrees with theory.
+```{R Show distribution of averages }
+#draw histogram
+ggplot()+aes(means)+
+  geom_histogram(binwidth=0.25, colour="black", fill="white",aes(y=..density..))+
+  stat_function(fun=dnorm, args=list(mean=mean_theory, sd=sd_theory),color="red",size=1.5)+
+  labs(title="Distribution of means of 40 exponentials",x="Value",y="Density")
 ```
 
 #Part 2
