@@ -1,8 +1,8 @@
 ---
 title: "Statistical Inference Course Project"
 author: "Victor Bucha"
-date: "5 October, 2015"
-output: html_document
+date: "13 October, 2015"
+output: pdf_document
 ---
 #Part 1
 ##Overview
