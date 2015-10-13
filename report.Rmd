@@ -2,7 +2,7 @@
 title: "Statistical Inference Course Project"
 author: "Victor Bucha"
 date: "4 October 2015"
-output: html_document
+output: pdf_document
 ---
 #Part 1
 ##Overview
@@ -59,7 +59,7 @@ ggplot()+aes(means)+
 
 ```
 
-##Distribution:
+##Distribution
 ```{R Show distributions }
 ggplot()+aes(as.vector(sim))+
   geom_histogram(binwidth=2.5, colour="black", fill="white")+
