@@ -62,11 +62,7 @@ ggplot()+aes(means)+
 ```
 
 ##Distribution
-<<<<<<< HEAD
-=======
 At first let us plot distribution of exponentials obtained on the first simulation step of assignment. It follows exponetial law as we can see from figure bellow.
-
->>>>>>> 6382d9a1270bcfc06452c2ecb04143910e7e1445
 ```{R Show distributions }
 ggplot()+aes(as.vector(sim))+
   geom_histogram(binwidth=2.5, colour="black", fill="white",aes(y=..density..))+
