@@ -1,0 +1,61 @@
+---
+title: "Statistical Inference Course Project"
+author: "Victor Bucha"
+date: "15 October, 2015"
+output: pdf_document
+---
+#Part 2. Basic inferential data analysis
+
+## Exploratory plot 
+At first let us look at the data. Bellow plot shows effect of vitamin C on tooth growth. We smoothed data with linear model. It's interesting that for dose levels 0.5 and 1.0 ascorbic acid shows lower perfomance than orange juice. However for dose level 2.0 both supplemnets shows relativly the same growth performance. Let us test our hypotheses **assuming different variances for OJ and VC supplements.**
+   
+```{R load data}
+data("ToothGrowth")
+library(ggplot2)
+ggplot(data=ToothGrowth,aes(x=dose,y=len,color=supp))+
+        geom_point(size=3,alpha=0.7)+geom_smooth(size=1,se=FALSE,method=lm)+
+        labs(title="The Effect of Vitamin C on Tooth Growth",x="Dose",y="Length")+
+        scale_color_discrete("Supplement",labels=c("Orange Juice","Ascorbic Acid"))
+```
+
+
+## Orange Juice vs Ascorbic Acid at 0.5 dose level
+Ascorbic acid seems to provide less tooth growth for dose levels 0.5 and 1.0. Let us check these hypotheses with t-test as follows H0: mu=0, H1: mu<0
+
+```{R Test hypothesis for dose level 0.5}
+OJ5<-subset(ToothGrowth,supp=="OJ" & dose==.5,
+            select = len) # Ornage Juice, 0.5 dose
+VC5<-subset(ToothGrowth,supp=="VC" & dose==.5,
+            select = len) # Ascorbic Acid, 0.5 dose
+t.test(VC5,OJ5,alternative="less") 
+```
+
+#### Conclusion:
+We reject Null hypothesis and accept alternative. It means **ascorbic acid provides less tooth growth for 0.5 dose level  with 95% confidence**.
+
+## Orange Juice vs Ascorbic Acid at 1.0 dose level
+Let us check 1.0 dose.
+```{R Test hypothesis for dose level 1.0}
+OJ10<-subset(ToothGrowth,supp=="OJ" & dose==1.0,
+            select = len) # Ornage Juice, 1.0 dose
+VC10<-subset(ToothGrowth,supp=="VC" & dose==1.0,
+            select = len) # Ascorbic Acid, 1.0 dose
+t.test(VC10,OJ10,alternative="less") 
+```
+
+#### Conclusion:
+The same result as for 0.5 dose. We reject Null hypothesis and accept alternative. It means **ascorbic acid provides less tooth growth for  1.0 dose level with 95% confidence.**
+
+## Orange Juice vs Ascorbic Acid at 2.0 dose level
+Let us check 2.0 dose. H0: mu=0, H1: mu!=0
+
+```{R Test hypothesis for dose level 2.0}
+OJ20<-subset(ToothGrowth,supp=="OJ" & dose==2.0,
+            select = len) # Ornage Juice, 2.0 dose
+VC20<-subset(ToothGrowth,supp=="VC" & dose==2.0,
+            select = len) # Ascorbic Acid, 1.0 dose
+t.test(VC20,OJ20) 
+```
+
+#### Conclusion:
+We can not reject null hypothesis since p-value is large and confidence interval contains zero. It means that **orange juice and ascorbic acid provide the same tooth growth for 2.0 dose level with 95% confidence.**
